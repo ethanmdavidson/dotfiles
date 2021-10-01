@@ -1,0 +1,19 @@
+#!/bin/bash
+
+project="$1"
+instance="$2"
+zone="$3"
+
+die () {
+    echo >&2 "$@"
+    exit 1
+}
+
+[ -n "$project" ] || die 'project missing'
+[ -n "$instance" ] || die 'instance missing'
+
+if [ -z "$zone" ]; then
+    zone='us-central1-b'
+fi
+
+gcloud compute ssh --ssh-flag "-p 3270" --project "$project" --zone "$zone" "$instance"
